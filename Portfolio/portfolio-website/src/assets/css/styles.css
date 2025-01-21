@@ -12,6 +12,13 @@ header {
     text-align: center;
 }
 
+header ul,
+header ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 h1 {
     margin: 0;
     font-size: 2.5em;
