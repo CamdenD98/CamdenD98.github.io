@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Code Examples</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <h1>Python Code Examples</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="sql.html">SQL Code</a></li>
+                <li><a href="java.html">Java Code</a></li>
+                <li><a href="merch.html">Merchandise</a></li>
+                <li><a href="model.html">3D Modeling</a></li>
+                <li><a href="python.html">Python Code</a></li>
+                <li><a href="html.html">HTML Code</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="code-example">
+        <h2>Text Based Game
+        </h2>
+            <p>
+                Below is the first Python code I ever did. I include this as an example that this is where we all begin on our journey of coding. No matter where we are now we all began with a simply asking a user for their name and age. I am amazed to know I went from this simple code to what I have achieved throughout my six years of education.
+            </p>
+        <pre><code>
+            from datetime import date
+
+            user_name = input('What is your name?')
+
+            print('Your name is ' + user_name + '!')
+
+            user_age = int(input('What is your age?'))
+
+            print('You are ' + str(user_age) + ' years old!')
+
+            today = date.today()
+
+            current_year = int(today.strftime("%Y"))
+
+            birth_year = current_year-user_age
+
+            print('Hello ' + user_name + '! You were born in ' + str(birth_year) + '.')
+        </code></pre>
+    </section>
+    <section class="code-example">
+        <h2>Text Based Game
+        </h2>
+            <p>
+                Below is a Python video game I created in 2023. In this game you are an adventurer exploring an abandoned castle while also trying to escape without running into the ogre that calls this place home. Throughout your adventures through the castle the player is able to find different magical items to help aid them in their escape...or even to defeat the ogre. The user would simply input a cardinal direction to move around the play area. If the direction was not able to be travelled they would be met with a themed error message, otherwise they would enter a new room. Some rooms would randomly have a magical item placed into them using a randomizer which makes each play through both fun and a whole new experience.
+            </p>
+        <pre><code>
+            rooms = {
+                'Courtyard': {'NORTH': 'School Grounds', 'SOUTH': 'Grand Foyer'},
+                'School Grounds': {'SOUTH': 'Courtyard', 'item': 'Stone of Immortality'},
+                'Grand Foyer': {'NORTH': 'Courtyard', 'EAST': 'Mysterious Room', 'WEST': 'Dining Hall', 'item':
+                                'Staff of Champions'},
+                'Dining Hall': {'NORTH': 'Boys Dorms', 'EAST': 'Grand Foyer', 'SOUTH': 'Potions Classroom', 'item':
+                                'Overflowing Chalice'},
+                'Mysterious Room': {'NORTH': 'Girls Dorms', 'WEST': 'Grand Foyer', 'SOUTH': 'Headmasters Room', 'item':
+                                    'Whispering Necklace'},
+                'Girls Dorms': {'SOUTH': 'Mysterious Room', 'item': 'Cursed Crown'},
+                'Boys Dorms': {'SOUTH': 'Dining Hall', 'item': 'Invisibility Cloak'},
+                'Headmasters Room': {'NORTH': 'Mysterious Room', 'item': 'Great Sword'},
+                'Potions Classroom': {'NORTH': 'Dining Hall', 'EAST': 'Dungeon', 'item': 'Potion'},
+                'Dungeon': {'WEST': 'Potions Classroom', 'item': 'Troll'}
+            }
+        
+        directions = {'NORTH', 'SOUTH', 'EAST', 'WEST'}
+        
+        def showInstructions():
+            print("Hello, weary traveler, and welcome to Troll Hunter.")
+            print("As you travel through this school you will have to collect")
+            print("at least 6 items before you can face the troll. Though beware,")
+            print("for if you face the troll before you are ready you will find an")
+            print("early end to your travels.")
+            print("To move: simply type NORTH, SOUTH, EAST, or WEST.")
+            print("Along your travels you may notice items along your path, to collect.")
+            print("Simply type COLLECT ITEM to add them to your inventory.")
+        
+        def showStatus(currentRoom, inventory, rooms):
+            print("\n------------------------")
+            print(f"You find yourself currently in the {currentRoom}.")
+            item = getItem(rooms, currentRoom)
+            while currentRoom != 'Dungeon':
+                while currentRoom != 'Courtyard':
+                    if item not in inventory:
+                        print("You notice something strange in this room.")
+                    break
+                break
+            print("Inventory: ", inventory)
+            print("------------------------")
+        
+        def getItem(rooms, currentRoom):
+            while currentRoom != 'Courtyard':
+                return rooms[currentRoom]['item']
+        
+        def moveCharacter(room, direction):
+            adjacentRooms = rooms.get(room, {})
+            newRoom = adjacentRooms.get(direction, room)
+            return newRoom
+        
+        def addInventory(currentRoom, inventory, rooms, userMove):
+            if userMove == 'COLLECT ITEM':
+                item = getItem(rooms, currentRoom)
+                if item in rooms[currentRoom]['item']:
+                    inventory.append(item)
+                else:
+                    print("There is no item here.")
+        
+        def main():
+            showInstructions()
+        
+            currentRoom = 'Courtyard'
+            inventory = []
+        
+            while currentRoom != 'Dungeon':
+        
+                showStatus(currentRoom, inventory, rooms)
+        
+                usersChoice = input("Where to?").upper()
+        
+                if usersChoice in directions:
+                    newRoom = moveCharacter(currentRoom, usersChoice)
+                    if newRoom == currentRoom:
+                        print("The way is blocked!")
+                    else:
+                        currentRoom = newRoom
+                elif usersChoice == 'COLLECT ITEM':
+                    item = getItem(rooms, currentRoom)
+                    if item in rooms[currentRoom]['item']:
+                        inventory.append(item)
+                    else:
+                        print('There is no item here.')
+                else:
+                    print("Unable to divinate your directions, try again.")
+        
+            if len(inventory) == 8:
+                print("You enter the Dungeon and come face to face with a towering Troll! With your collection of Legendary\n "
+                      "Items you easily raise your hand and the troll explodes into small pieces of ash. On the ground where the\n"
+                      " Troll once stood you notice a key shining through the dust. You collect the key and hear a whisper in\n "
+                      "your ear, 'This is not the end!'")
+            elif 6 <= len(inventory) < 8:
+                print("You enter the Dungeon and come face to face with A Troll. Your collection of Legendary Items aide you in\n "
+                      "defeating the lumbering the beast. Congratulations, you have won. Now.....how to get out of here?")
+            else:
+                print("You enter the Dungeon and come face to face with the Troll. Realising far too late you are unable to \n"
+                      "defeat this enemy you quickly succumb to his power and become another skeleton within this cold dark \n"
+                      "cavern. Your journey has ended...")
+        
+        
+        if __name__ == "__main__":
+            main()
+        </code></pre>
+    </section>
+
+    <footer>
+        <p>© 2024 Camden Dougherty - All Rights Reserved</p>
+    </footer>
+</body>
+</html>
