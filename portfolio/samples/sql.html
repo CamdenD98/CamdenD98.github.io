@@ -56,6 +56,103 @@
             GROUP BY ProductType 
             ORDER BY PercentageReturned DESC;
         </code></pre>
+        <h2>SQL Code Sample</h2>
+        <p>Below is a code I wrote to for a database utlilized by a pretend company who were requesting to know what states were experiencing the most returns of their prodcuts. This code will also help identify which product was the most returned of the products sold of this company. </p>
+        <pre><code>
+            mysql;
+
+            SHOW DATABASES;
+
+            CREATE DATABASE QuantigrationUpdates;
+
+            SHOW DATABASES;
+
+            USE QuantigrationUpdates;
+
+            CREATE TABLE Customers (
+            CustomerID INT,
+            FirstName VARCHAR(25),
+            LastName VARCHAR(25),
+            Street VARCHAR(50),
+            City VARCHAR(50),
+            State VARCHAR(25),
+            ZipCode VARCHAR(10),
+            Telephone VARCHAR(15),
+            PRIMARY KEY(CustomerID)
+            );
+
+            CREATE TABLE Orders (
+            OrderID INT,
+            CustomerID INT,
+            SKU VARCHAR(20),
+            Description VARCHAR(50),
+            PRIMARY KEY(OrderID)
+            );
+
+            CREATE TABLE RMA (
+            RMAID INT,
+            OrderID INT,
+            Step VARCHAR(50),
+            Status VARCHAR(15),
+            Reason VARCHAR(15),
+            PRIMARY KEY(RMAID)
+            );
+
+            LOAD DATA INFILE '/home/codio/workspace/customers.csv'
+            INTO TABLE Customers
+            FIELDS TERMINATED BY ','
+            LINES TERMINATED BY '\r\n';
+
+            LOAD DATA INFILE '/home/codio/workspace/orders.csv'
+            INTO TABLE Orders
+            FIELDS TERMINATED BY ','
+            LINES TERMINATED BY '\r\n';
+
+            LOAD DATA INFILE '/home/codio/workspace/rma.csv'
+            INTO TABLE RMA
+            FIELDS TERMINATED BY ','
+            LINES TERMINATED BY '\r\n';
+
+            DROP TABLE RMA;
+
+            CREATE TABLE RMA (
+            RMAID INT,
+            OrderID INT,
+            Step VARCHAR(50),
+            Status VARCHAR(15),
+            Reason VARCHAR(15),
+            PRIMARY KEY(RMAID)
+            );
+
+            LOAD DATA INFILE '/home/codio/workspace/rma.csv'
+            INTO TABLE RMA
+            FIELDS TERMINATED BY ','
+            LINES TERMINATED BY '\r\n';
+
+            SELECT COUNT(*) FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+            WHERE UPPER(Customers.City) = 'FRAMINGHAM' AND UPPER(Customers.State) = 'MASSACHUSETTS';
+                
+            SELECT * FROM Customers WHERE UPPER(State) = 'MASSACHUSETTS';
+
+            SELECT COUNT(*) FROM Customers WHERE UPPER(State) = 'MASSACHUSETTS';
+
+            INSERT INTO Customers (CustomerID, FirstName, LastName, Street, City, State, ZipCode, Telephone)
+            VALUES
+            (100004, 'Luke', 'Skywalker', '15 Maiden Lane', 'New York', 'NY', '10222', '212-555-1234'),
+            (100005, 'Winston', 'Smith', '123 Sycamore Street', 'Greensboro', 'NC', '27401', '919-555-6623'),
+            (100006, 'MaryAnne', 'Jenkins', '1 Coconut Way', 'Jupiter', 'FL', '33458', '321-555-8907'),
+            (100007, 'Janet', 'Williams', '55 Redondo Beach Blvd', 'Torrence', 'CA', '90501', '310-555-5678')
+            ;
+
+            INSERT INTO Orders (OrderID, CustomerID, SKU, Description)
+            VALUES
+            (1204305, 100004, 'ADV-24-10C', 'Advanced Switch 10GigE Copper 24 port'),
+            (1204306, 100005, 'ADV-48-10F', 'Advanced Switch 10 GigE Copper/Fiber 44 port copper 4 port fiber'),
+            (1204307, 100006, 'ENT-24-10F', 'Enterprise Switch 10GigE SFP+ 24 Port'),
+            (1204308, 100007, 'ENT-48-10F', 'Enterprise Switch 10GigE SFP+ 48 port')
+            ;
+
+        </code></pre>
     </section>
 
     <footer>
