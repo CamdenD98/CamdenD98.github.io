@@ -27,8 +27,12 @@ header {
     text-align: center;
 }
 
-p, li {
+p {
     text-indent: 25px;
+}
+
+ul{
+    padding-left: 25px;
 }
 
 nav ul {
