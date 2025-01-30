@@ -25,8 +25,35 @@
     <section class="code-example">
         <h2>SQL Code Sample</h2>
         <pre><code>
--- Sample SQL Query
-SELECT name, age FROM employees WHERE department = 'Sales';
+            mysql;
+
+            SHOW DATABASES;
+
+            USE QuantigrationUpdates;
+
+            SHOW TABLES;
+
+            SELECT Collaborator.State AS State, 
+            COUNT(*) AS NumberOf FROM Orders 
+            INNER JOIN RMA ON Orders.OrderID = RMA.OrderID 
+            INNER JOIN Collaborator ON Collaborator.CustomerID = Orders.CustomerID 
+            GROUP BY STATE 
+            ORDER BY NumberOf DESC;
+
+            SELECT Collaborator.State AS State, 
+            (COUNT(*)*100/ (SELECT COUNT(*) FROM Orders INNER JOIN RMA ON Orders.OrderID = RMA.OrderId)) AS PercentOf FROM Orders 
+            INNER JOIN RMA ON Orders.OrderID = RMA.OrderID 
+            INNER JOIN Collaborator ON Collaborator.CustomerID = Orders.CustomerID 
+            GROUP BY State 
+            ORDER BY PercentOf DESC;
+
+            SELECT SKU AS ProductType, Description as ProductDescription, 
+            (COUNT(*)*100/(SELECT COUNT(*) FROM Orders 
+            INNER JOIN RMA ON Orders.OrderID = RMA.OrderID)) 
+            AS PercentageReturned FROM Orders 
+            INNER JOIN RMA ON Orders.OrderID = RMA.OrderID 
+            GROUP BY ProductType 
+            ORDER BY PercentageReturned DESC;
         </code></pre>
     </section>
 
