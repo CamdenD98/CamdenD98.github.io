@@ -24,6 +24,60 @@
 
     <section class="code-example">
         <h2>Java Code Sample</h2>
+            <p>
+                Here I have some Java code where the user would input two numbers and the program would determine if they are factors of one another.
+            </p>
+            <code>
+                import java.util.Scanner;
+                public class Factors {
+
+	                public static void main(String[] args) {
+		                Scanner input = new Scanner(System.in);
+		                System.out.println("Enter first number: ");
+		                int userFirst = input.nextInt();
+		                System.out.println("Enter a number to test if it�s a factor of first number: ");
+		                int userSecond = input.nextInt();
+		
+		                if (userFirst%userSecond ==0)
+			                System.out.println(userFirst + " and " + userSecond + " are factors of one another.");
+		                else if (userSecond%userFirst ==0)
+			                System.out.println("I think you�ve got your numbers reversed. " + userSecond + " is not a factor of " + userFirst + ", but " + userFirst + " is a factor of " + userSecond);
+		                else
+			                System.out.println("These are not factors of one another.");
+	}
+
+}
+            </code>
+    </section>
+    <section class="code-example">
+        <h2>Java Code Sample</h2>
+            <p>
+                Here I have some Java code where the user would input their current grade and the program would output a message based on the grade.
+            </p>
+            <code>
+                import java.util.Scanner;
+                public class Grades {
+
+	                public static void main(String[] args) {
+		            Scanner input = new Scanner(System.in);
+		            System.out.println("Enter your current grade: ");
+		            String userGrade = input.next();
+		            String lower;
+		            lower = userGrade.toUpperCase();
+		
+		            switch (lower) 
+		            {
+		            case "A" : System.out.println("Good Job");break;
+		            case "B" : System.out.println("Doing well");break;
+		            case "C" : System.out.println("Work a little harder");break;
+		            case "D" : System.out.println("STEM Ambassadors lead peer-led study sessions every Wednesday evening in GH 230 from 7-9pm.");break;
+		            case "F" : System.out.println("Danger, Will Robinson");break;
+		            default : System.out.println("You lost me."); break;
+		            }
+	            }
+
+            }
+            </code>
     </section>
 
     <footer>
