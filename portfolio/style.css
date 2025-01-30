@@ -32,7 +32,11 @@ p {
 }
 
 ul{
-    padding-left: 25px;
+    padding-left: 35px;
+}
+
+ul li{
+    margin-bottom: 10px;
 }
 
 nav ul {
