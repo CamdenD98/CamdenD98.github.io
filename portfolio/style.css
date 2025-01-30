@@ -27,7 +27,7 @@ header {
     text-align: center;
 }
 
-p {
+p, ul {
     text-indent: 25px;
 }
 
