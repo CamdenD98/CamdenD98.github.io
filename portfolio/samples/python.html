@@ -158,6 +158,133 @@
             main()
         </code></pre>
     </section>
+    <section class="code-example">
+        <h2>First Program
+        </h2>
+            <p>
+                Below is the first Python code I ever worked on. I include this as an example that this is where we all begin on our journey of coding. No matter where we are now we all began with a simply asking a user for their name and age. I am amazed to know I went from this simple code to what I have achieved throughout my six years of education.
+            </p>
+        <pre><code>
+            class InsufficientFundsError(Exception):
+                pass
+
+            class Account:
+                def __init__(self, account_number, owner, balance=0.0):
+                    self.account_number = account_number
+                    self.owner = owner
+                    self.balance = balance
+
+                def deposit(self, amount):
+                    if amount <= 0:
+                        raise ValueError("Deposit amount must be positive.")
+                    self.balance += amount
+                    return self.balance
+
+                def withdraw(self, amount):
+                    if amount <= 0:
+                        raise ValueError("Withdrawal amount must be positive.")
+                    if self.balance < amount:
+                        raise InsufficientFundsError("Insufficient funds for withdrawal.")
+                    self.balance -= amount
+                    return self.balance
+
+                def get_balance(self):
+                    return self.balance
+
+                def __str__(self):
+                    return f"Account({self.account_number}) - Owner: {self.owner}, Balance: ${self.balance:.2f}"
+
+            class CheckingAccount(Account):
+                def __init__(self, account_number, owner, balance=0.0, overdraft_limit=100.0):
+                    super().__init__(account_number, owner, balance)
+                    self.overdraft_limit = overdraft_limit
+
+                def withdraw(self, amount):
+                    if amount <= 0:
+                        raise ValueError("Withdrawal amount must be positive.")
+                    if self.balance - amount < -self.overdraft_limit:
+                        raise InsufficientFundsError("Insufficient funds and overdraft limit reached.")
+                    self.balance -= amount
+                    return self.balance
+
+                def __str__(self):
+                    return (f"CheckingAccount({self.account_number}) - Owner: {self.owner}, "
+                            f"Balance: ${self.balance:.2f}, Overdraft Limit: ${self.overdraft_limit:.2f}")
+
+            class SavingsAccount(Account):
+                def __init__(self, account_number, owner, balance=0.0, interest_rate=0.02):
+                    super().__init__(account_number, owner, balance)
+                    self.interest_rate = interest_rate
+
+                def apply_interest(self):
+                    interest = self.balance * self.interest_rate
+                    self.balance += interest
+                    return interest
+
+                def __str__(self):
+                    return (f"SavingsAccount({self.account_number}) - Owner: {self.owner}, "
+                            f"Balance: ${self.balance:.2f}, Interest Rate: {self.interest_rate * 100:.1f}%")
+
+            class Bank:
+                def __init__(self, name):
+                    self.name = name
+                    self.accounts = {}  # Stores accounts with account_number as the key
+
+                def open_account(self, account):
+                    if account.account_number in self.accounts:
+                        raise ValueError("Account number already exists.")
+                    self.accounts[account.account_number] = account
+
+                def close_account(self, account_number):
+                    if account_number not in self.accounts:
+                        raise ValueError("Account not found.")
+                    del self.accounts[account_number]
+
+                def get_account(self, account_number):
+                    return self.accounts.get(account_number)
+
+                def transfer(self, from_account_number, to_account_number, amount):
+                    from_account = self.get_account(from_account_number)
+                    to_account = self.get_account(to_account_number)
+                    if not from_account or not to_account:
+                        raise ValueError("One or both accounts not found.")
+                    from_account.withdraw(amount)
+                    to_account.deposit(amount)
+
+                def __str__(self):
+                    accounts_info = "\n".join(str(acc) for acc in self.accounts.values())
+                    return f"Bank: {self.name}\nAccounts:\n{accounts_info}"
+
+            if __name__ == "__main__":
+                my_bank = Bank("Python Bank")
+
+                checking = CheckingAccount(account_number="CHK1001", owner="Alice", balance=500.0, overdraft_limit=200.0)
+                savings = SavingsAccount(account_number="SAV2001", owner="Bob", balance=1000.0, interest_rate=0.03)
+
+                my_bank.open_account(checking)
+                my_bank.open_account(savings)
+
+                print("Initial Account States:")
+                print(my_bank)
+
+                print("\nDepositing $100 to Alice's checking account...")
+                checking.deposit(100)
+                print(checking)
+
+                print("\nWithdrawing $50 from Bob's savings account...")
+                savings.withdraw(50)
+                print(savings)
+
+                print("\nTransferring $200 from Alice's checking to Bob's savings...")
+                my_bank.transfer("CHK1001", "SAV2001", 200)
+                print(my_bank)
+
+                print("\nApplying interest to Bob's savings account...")
+                interest = savings.apply_interest()
+                print(f"Interest applied: ${interest:.2f}")
+                print(savings)
+        </code></pre>
+    </section>
 
     <footer>
         <p>© 2024 Camden Dougherty - All Rights Reserved</p>
